@@ -33,6 +33,10 @@ services:
       - static_value:/code/static/
     env_file:
       - ./.env
+    command: >
+      sh -c "
+      python manage.py collectstatic --no-input &&
+      python manage.py migrate --no-input"
   nginx:
     # образ, из которого должен быть запущен контейнер
     image: nginx:1.19.3
