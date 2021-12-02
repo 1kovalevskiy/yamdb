@@ -20,7 +20,6 @@ services:
     env_file:
       - ./.env
   web:
-    build: .
     image: 1kovalevskiy/yamdb_final:latest
     restart: always
     ports:
@@ -36,7 +35,8 @@ services:
     command: >
       sh -c "
       python manage.py collectstatic --no-input &&
-      python manage.py migrate --no-input"
+      python manage.py migrate --no-input &&
+      gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000"
   nginx:
     # образ, из которого должен быть запущен контейнер
     image: nginx:1.19.3
