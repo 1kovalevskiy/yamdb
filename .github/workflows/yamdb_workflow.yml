@@ -1,4 +1,4 @@
-name: Django-app workflow
+name: yamdb_final workflow
 
 on: [push]
 
