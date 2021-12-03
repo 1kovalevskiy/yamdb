@@ -22,12 +22,15 @@ jobs:
         # установка зависимостей
         pip install -r requirements.txt 
 
-    - name: Test with flake8 and django tests
+    - name: Test with flake8
       run: |
         # запуск проверки проекта по flake8
         python -m flake8
-        # запустить написанные разработчиком тесты
-        python -m pytest
+
+    - name: Test with  django tests
+        run: |
+          # запустить написанные разработчиком тесты
+          python -m pytest
         
         
   build_and_push_to_docker_hub:
