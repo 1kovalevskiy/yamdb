@@ -1,63 +1,53 @@
-# версия docker-compose
-version: '3.8'
+version: '3.3'
 
-# имя директории для хранения данных
 volumes:
-  postgres_data:  # это название директории для хранения данных БД
+  postgres_data:
   media_value:
   static_value:
 
-# имена и описания контейнеров, которые должны быть развёрнуты
 services:
-  # описание контейнера db
-  db:
-    # образ, из которого должен быть запущен контейнер
-    image: postgres:latest
-    # volume и связанная с ним директория в контейнере
+  postgres:
+    image: postgres:12
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    # адрес файла, где хранятся переменные окружения
+
     env_file:
       - ./.env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
   web:
-    image: 1kovalevskiy/yamdb_final:latest
+    image: 1kovalevskiy/api-yatube:latest
     restart: always
     ports:
       - "8000:8000"
-    # "зависит от",
     depends_on:
-      - db
+      - postgres
     volumes:
       - media_value:/code/media/
       - static_value:/code/static/
     env_file:
       - ./.env
-    command: >
-      sh -c "
-      python manage.py collectstatic --no-input &&
-      python manage.py migrate --no-input &&
-      gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000"
+    command: bash -c "
+      python manage.py collectstatic --noinput &&
+      python manage.py migrate --noinput &&
+      gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000
+      "
+
+
   nginx:
-    # образ, из которого должен быть запущен контейнер
     image: nginx:1.19.3
 
-    # запросы с внешнего порта 80 перенаправляем на внутренний порт 80
     ports:
       - "80:80"
 
     volumes:
-      # При сборке скопировать созданный нами конфиг nginx из исходной директории
-      # в контейнер и сохранить его в директорию /etc/nginx/conf.d/
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-
-      # Контейнер nginx будет работать с данными, хранящиеся в томе static_value,
-      # через свою директорию /var/html/static/
       - static_value:/var/html/static/
-
-      # Данные, хранящиеся в томе media_value, будут доступны в контейнере nginx
-      # через директорию /var/html/media/
       - media_value:/var/html/media/
 
     depends_on:
-      # Контейнер nginx должен быть запущен после контейнера web
       - web
