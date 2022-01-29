@@ -1,6 +1,7 @@
 attrs==21.2.0
 certifi==2021.10.8
 charset-normalizer==2.0.7
+coverage==6.3
 Django==2.2.16
 django-filter==21.1
 djangorestframework==3.12.4
@@ -15,6 +16,7 @@ py==1.10.0
 PyJWT==2.2.0
 pyparsing==2.4.7
 pytest==6.2.4
+pytest-cov==3.0.0
 pytest-django==4.4.0
 pytest-pythonpath==0.7.3
 python-dotenv==0.19.1
@@ -22,5 +24,5 @@ pytz==2021.3
 requests==2.26.0
 sqlparse==0.4.2
 toml==0.10.2
+tomli==2.0.0
 urllib3==1.26.7
-
