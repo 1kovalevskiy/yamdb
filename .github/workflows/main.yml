@@ -1,4 +1,4 @@
-name: CI_api_yatube
+name: CI_yamdb
 
 on: [push]
 

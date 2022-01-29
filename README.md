@@ -1,5 +1,5 @@
 # Сервис YamDB
-![yatube](https://github.com/1kovalevskiy/yamdb/actions/workflows/main.yml/badge.svg)
+![yamdb](https://github.com/1kovalevskiy/yamdb/actions/workflows/main.yml/badge.svg)
 ![coverage](https://github.com/1kovalevskiy/yamdb/blob/master/coverage.svg)
 
 ## Учебный сервис "YamDB" 
