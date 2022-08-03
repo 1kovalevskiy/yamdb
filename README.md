@@ -23,7 +23,7 @@
 - Запустить `docker-compose up -d`
 
 ## Тестовый сервер
-[Тестовый сервер (не работает)](http://yamdb.kovalevskiy.xyz)http://yamdb.kovalevskiy.xyz
+[Тестовый сервер](http://yamdb.kovalevskiy.xyz/redoc)
 
 ## Технологии
 - API на "Django + DRF"
